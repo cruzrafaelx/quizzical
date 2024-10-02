@@ -9,6 +9,5 @@ export default function Landing({start}){
                   <h3>Are you really that smart as you proclaim?</h3>
                   <button onClick={start}>Start quiz</button>
             </section>
-
       )
 }

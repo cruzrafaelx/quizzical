@@ -11,8 +11,14 @@ function App() {
   //start state
   const [start, setStart] = useState(false)
 
+  //rawQuestions state from the API
+  const[rawQuestions, setRawQuestions] = useState([])
+  
   //questions state to store the retrieved questions
   const [questions, setQuestions] = useState([])
+
+  //answers state to store the retrieved answers
+  const [answers, setAnswers] = useState([])
 
    //Function to toggle start
    const toggleStart = () => {
@@ -33,7 +39,7 @@ function App() {
         const data = await res.json()
         console.log("Fetched data", data)
 
-        setQuestions(data.results)
+        setRawQuestions(data.results)
       } 
       
       catch (error) {
@@ -44,31 +50,44 @@ function App() {
       
     },[])
 
+    console.log(rawQuestions)
 
-    //Array that holds the question in index 0 and answers arranged randomly 
-    const questionAndAnswer = questions.map(question => {
+    //useEffect to set answers and questions state only when rawQuestions are initialized after API retrieval
+    useEffect(() => {
+
+      //Check if API has been retrieved and rawQuestions has been filled
+      if(rawQuestions.length > 0){
+
+        //Set the questions based on rawQuestions
+        setQuestions(rawQuestions.map(question => decode(question.question)))
+
+        //Set the answers based on rawQuestions
+        setAnswers(
+            rawQuestions.map(question => {
+
+            //Array of decoded incorrect answers
+            let orderedArray = question.incorrect_answers.map(item => decode(item))
+        
+            const randomIndex = Math.floor(Math.random() * 4)
       
-      //Array of decoded incorrect answers
-      let orderedArray = question.incorrect_answers.map(item => decode(item))
-  
-      const randomIndex = Math.floor(Math.random() * 4)
-
-      //Insert decoded correct answer with a random index using splice
-      orderedArray.splice(randomIndex, 0, decode(question.correct_answer))
-
-      //Manually inserting the question in index 0
-      return [question.question, ...orderedArray]
-    })
+            //Insert decoded correct answer with a random index using splice
+            orderedArray.splice(randomIndex, 0, decode(question.correct_answer))
+      
+            return orderedArray
+          }))
+      }
+    }, [rawQuestions])
 
 
-  console.log(questionAndAnswer)
-  
+  console.log(answers)
+  console.log(questions)
+  //Youre going to have to separate the question and answers again OR you need to find a way to render them all from a single array. The problem is that the number of answers to a question vary. Its not always 4 as initially thought. 
 
   return (
     <div className="App">
       {!start
        ? <Landing start={toggleStart} /> 
-       : <Quiz quiz={questionAndAnswer}/>}
+       : <Quiz />}
     </div>
   );
 }
