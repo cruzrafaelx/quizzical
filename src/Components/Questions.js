@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function Questions(){
+export default function Questions({questions}){
       
       
       return(
             <section className="questions-container" >
-                  <p>here are the questions</p>
+                  {questions}
             </section >
       )
 }
