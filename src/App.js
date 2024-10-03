@@ -87,7 +87,7 @@ function App() {
     <div className="App">
       {!start
        ? <Landing start={toggleStart} /> 
-       : <Quiz />}
+       : <Quiz answers={answers} questions={questions} />}
     </div>
   );
 }

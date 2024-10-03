@@ -24,3 +24,13 @@
   justify-content: center;
   align-items: center;
 }
+
+.question-box{
+  display: flex;
+  flex-direction: column;
+}
+
+.answers-container{
+  display: flex;
+  flex-direction: row;
+}
