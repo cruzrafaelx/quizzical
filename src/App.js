@@ -50,7 +50,7 @@ function App() {
       
     },[])
 
-    console.log(rawQuestions)
+
 
     //useEffect to set answers and questions state only when rawQuestions are initialized after API retrieval
     useEffect(() => {
@@ -96,22 +96,21 @@ function App() {
     }, [rawQuestions])
 
 
-  //Function that changes the isHeld value when answer is clicked
-  function toggleAnswer(key, index){
+    //Function that changes the isHeld value when answer is clicked
+    function toggleAnswer(key, index){
 
-    const newAnswers = answers.map((answer, origIndex)  => {
-      return index === origIndex ? 
-        answer.map(item => {
-          return key === item.key ? {...item, isHeld: !item.isHeld} : item
-      }) : answer
-    })
+        const newAnswers = answers.map((answer, origIndex)  => {
+          return index === origIndex ? 
+            answer.map(item => {
+              return key === item.key ? {...item, isHeld: !item.isHeld} : {...item, isHeld: false}
+          }) : answer
+        })
+        setAnswers(prevAnswers => newAnswers)
+    }
 
-    setAnswers(prevAnswers => newAnswers )
-  }
+    console.log(answers)
 
   
-
-
   return (
     <div className="App">
       {!start
@@ -122,15 +121,3 @@ function App() {
 }
 
 export default App;
-
-
-
-//Create a toggleAnswer function
-// pass this as a prop to quiz
-// add the function to every answer
-// If you click an answer, the index of the question and key of the answer should get passed as an argument
-// we go back to App.js
-// inside the toggleAnswer function,
-// we map over the answer state, if the array does not match the index, it gets returned as it is, if it matches the index, we map over it,
-//we iterate over the the corresponding answer state using the the passed key.
-// make a ternary condition, if the key doesnt match, we pass it as it is, if it is not, we use the spread operator on every other property and the isHeld will be changed to true. 

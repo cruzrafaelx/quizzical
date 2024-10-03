@@ -14,7 +14,7 @@ export default function Quiz({answers, questions, toggle}){
                               {
                               answers[index].map(answer => (
                                     <p key={answer.key} 
-                                    className="answer"
+                                    className={`answer ${answer.isHeld ? "isHeld": ""}`} 
                                     onClick={()=>toggle(answer.key, index)}>{answer.value}</p>
                               ))
                               }
@@ -23,6 +23,7 @@ export default function Quiz({answers, questions, toggle}){
                   </div>
                   ))
                   }
+                  <button>Submit answers</button>
             </div>
       </section>
       )

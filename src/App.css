@@ -16,7 +16,7 @@
 
 .questions-container{
   height: 100vh;
-  width: 600px;
+  width: 800px;
   margin: 0 auto;
   border: 1px solid black;
   display: flex;
@@ -34,3 +34,18 @@
   display: flex;
   flex-direction: row;
 }
+
+.answer{
+  margin-right: 1rem;
+  border: 1px solid black;
+ 
+}
+
+.isHeld{
+
+  background: yellow;
+}
+
+/* .notIsHeld{
+
+} */
