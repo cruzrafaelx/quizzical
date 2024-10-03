@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Quiz({answers, questions}){
+export default function Quiz({answers, questions, toggle}){
       
       return(
       <section className="questions-container">
@@ -14,7 +14,8 @@ export default function Quiz({answers, questions}){
                               {
                               answers[index].map(answer => (
                                     <p key={answer.key} 
-                                    className="answer">{answer.value}</p>
+                                    className="answer"
+                                    onClick={()=>toggle(answer.key, index)}>{answer.value}</p>
                               ))
                               }
                         </div>
