@@ -20,6 +20,9 @@ function App() {
   //answers state to store the retrieved answers
   const [answers, setAnswers] = useState([])
 
+  //correctAnswer state to store number of correct answers
+  const [score, setScore] = useState(0)
+
    //Function to toggle start
    const toggleStart = () => {
     setStart(prevStart => !prevStart)
@@ -108,14 +111,38 @@ function App() {
         setAnswers(prevAnswers => newAnswers)
     }
 
-    console.log(answers)
+    //Function to handle the submit button
+    function toggleSubmit(){
+      console.log("submitted!")
 
+      let sum = 0
+
+      answers.forEach( answer => {
+        answer.forEach( item => {
+          if(item.isHeld && item.isCorrect){
+            sum = sum + 1
+          }
+        })
+      })
+
+      setScore( prevScore => sum)
+    }
+
+    console.log(answers)
+    console.log(score)
+    
+    //When you submit, you need to tally the score, but also, if the chosen answer is wrong, the correct answer should be colored differently unless it is held and correct.
   
   return (
     <div className="App">
       {!start
        ? <Landing start={toggleStart} /> 
-       : <Quiz answers={answers} questions={questions} toggle={toggleAnswer} />}
+       : <Quiz answers={answers} 
+               questions={questions} 
+               toggle={toggleAnswer} 
+               submit={toggleSubmit}
+         />
+      }
     </div>
   );
 }

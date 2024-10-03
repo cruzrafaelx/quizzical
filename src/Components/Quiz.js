@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Quiz({answers, questions, toggle}){
+export default function Quiz({answers, questions, toggle, submit}){
       
       return(
       <section className="questions-container">
@@ -23,7 +23,7 @@ export default function Quiz({answers, questions, toggle}){
                   </div>
                   ))
                   }
-                  <button>Submit answers</button>
+                  <button onClick={()=>submit()}>Submit answers</button>
             </div>
       </section>
       )
