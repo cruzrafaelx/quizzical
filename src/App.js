@@ -59,19 +59,36 @@ function App() {
       if(rawQuestions.length > 0){
 
         //Set the questions based on rawQuestions
-        setQuestions(rawQuestions.map(question => decode(question.question)))
+        setQuestions(rawQuestions.map(question => {
+          return { key: nanoid(),
+              value: decode(question.question)
+            }
+          
+        }))
 
         //Set the answers based on rawQuestions
         setAnswers(
             rawQuestions.map(question => {
 
             //Array of decoded incorrect answers
-            let orderedArray = question.incorrect_answers.map(item => decode(item))
+            let orderedArray = question.incorrect_answers.map(item =>{
+              return { key: nanoid(),
+                       value: decode(item),
+                       isCorrect: false,
+                       isHeld: false
+                      }
+              
+            })
         
             const randomIndex = Math.floor(Math.random() * 4)
       
             //Insert decoded correct answer with a random index using splice
-            orderedArray.splice(randomIndex, 0, decode(question.correct_answer))
+            orderedArray.splice(randomIndex, 0, {
+              key: nanoid(),
+              value: decode(question.correct_answer),
+              isCorrect: true,
+              isHeld: false
+            })
       
             return orderedArray
           }))

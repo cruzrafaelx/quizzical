@@ -7,13 +7,14 @@ export default function Quiz({answers, questions}){
             <div>
                   {
                   questions.map((question, index) =>(
-                  <div key={index} className="question-box">
-                        <p>{question}</p>
+                  <div key={question.key} className="question-box">
+                        <p>{question.value}</p>
                   
                         <div className="answers-container"> 
                               {
                               answers[index].map(answer => (
-                                    <p>{answer}</p>
+                                    <p key={answer.key} 
+                                    className="answer">{answer.value}</p>
                               ))
                               }
                         </div>
