@@ -43,9 +43,9 @@
 
 .isHeld{
 
-  background: yellow;
+  background: #94D7A2;
 }
 
-/* .notIsHeld{
-
-} */
+.not-chosen{
+  background: #293264;
+}

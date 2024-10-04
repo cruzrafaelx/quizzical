@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function Quiz({answers, questions, toggle, submit}){
+export default function Quiz({answers, 
+                              questions, 
+                              toggle, 
+                              submit, 
+                              newGameBtn, 
+                              submitBtn}){
       
       return(
       <section className="questions-container">
@@ -12,9 +17,11 @@ export default function Quiz({answers, questions, toggle, submit}){
                   
                         <div className="answers-container"> 
                               {
-                              answers[index].map(answer => (
+                              answers[index] && answers[index].map(answer => (
                                     <p key={answer.key} 
-                                    className={`answer ${answer.isHeld ? "isHeld": ""}`} 
+                                    className={`answer 
+                                                ${answer.isHeld ? "isHeld": ""}
+                                                ${answer.wasNotChosen ? "not-chosen" : ""}`.trim()} 
                                     onClick={()=>toggle(answer.key, index)}>{answer.value}</p>
                               ))
                               }
@@ -23,7 +30,12 @@ export default function Quiz({answers, questions, toggle, submit}){
                   </div>
                   ))
                   }
-                  <button onClick={()=>submit()}>Submit answers</button>
+                  {
+                        !submit ?
+                        <button onClick={()=>submitBtn()}>Submit</button> :
+                        <button onClick={()=>newGameBtn()}>New game</button>
+                  }
+                  
             </div>
       </section>
       )
