@@ -5,8 +5,12 @@ import Quiz from './Components/Quiz';
 import {useState, useEffect} from 'react'
 import { nanoid } from 'nanoid';
 import {decode} from 'html-entities'
+import { GridLoader } from 'react-spinners';
 
 function App() {
+
+  //loading state
+  const [loading, setLoading] = useState(true)
 
   //start state
   const [start, setStart] = useState(false)
@@ -40,6 +44,8 @@ function App() {
   //useEffect to handle API retrieval
   useEffect(() => {
 
+    setLoading(true)
+
     async function getQuestions(){
       console.log("Fetching questions...")
       try{
@@ -56,8 +62,14 @@ function App() {
       
       catch (error) {
         console.error("Error fetching questions:", error);
-      }}
+      }
+      
+      finally{
+        setLoading(false)
+      }
+    }
 
+     
       getQuestions()
   },[newGame])
 
@@ -87,7 +99,6 @@ function App() {
                       isCorrect: false,
                       isHeld: false,
                       wasNotChosen: false
-      
                     }
             
           })
@@ -109,6 +120,18 @@ function App() {
   }, [rawQuestions])
 
 
+   //Check if in every question one answer has been picked, if yes, submit button will be abled to click. The isAllAnswered will be updated, everytime anything changes in the answers state. 
+  useEffect(() => {
+    const allAnswered = answers.every(answer =>{
+      return answer.some(item => {
+        return item.isHeld
+      })
+    })
+
+      setIsAllAnswered(allAnswered)
+  })
+
+
   //Function that changes the isHeld value when answer is clicked
   function toggleAnswer(key, index){
 
@@ -120,6 +143,12 @@ function App() {
       })
       setAnswers(prevAnswers => newAnswers)
   }
+
+  // const allAnswered = answers.every(answer =>{
+  //   return answer.some(item => {
+  //     return item.isHeld
+  //   })
+  // })
 
   //Function to handle the submit button
   function toggleSubmit(){
@@ -151,58 +180,38 @@ function App() {
 
     setScore( prevScore => sum)
     setAnswers(prevAnswers => newArray)
-
-    // if(!submit){
-    //   
-    // } 
-    // else{
-    //   initializeAnswers()
-    // }
     setSubmit(!submit)
   }
 
+  //Function to handle new game button
   function toggleNewGame(){
     setNewGame(!newGame)
     setSubmit(!submit)
-  }
+  }    
 
-  console.log(answers)
-  console.log(score)
-  
-    //When you submit, you need to tally the score, but also, if the chosen answer is wrong, the isCorrect should be colored differently unless it is held and correct.
-
-    //When you submit, you want the button to change to new game and show the score. 
-    // Also when new game, you want your rawQuestions to be reinitialzed again.
-    // The problem is, we are using the submit dependency to run the useEffect again.
-    // now we have delcared a newGame state which we can use to be a dependency for the use effect. 
-    //Problems: 
-    //1. when we click the submit, the questions get rerendered immediately.
-    // make sure, the rawQuestions only get re-initialized when New game is positive.  
-    //render 2 buttons: submit and newGame, 
-    //if submit state is false, show submit, if submit state is true, show new game.
-    //if you click on submit, submit will be true showing new game button
-    //if you click on new game, new game will be true, which will change useEffect, and it turns submit into false again, showing the submit button once more. 
-
-
-
-    //2. the submit button can be clicked even if there is no answer
-    //Make sure in every array, there is atleast one isHeld so button can be clicked. 
-
-
-  
+ 
   return (
     <div className="App">
-      {!start
-       ? <Landing start={toggleStart} /> 
-       : <Quiz answers={answers} 
-               questions={questions} 
-               toggle={toggleAnswer} 
-               submitBtn={toggleSubmit}
-               newGameBtn={toggleNewGame}
-               submit={submit}
-              //  newGameBtn={newgame}
-         />
+      {
+       !start ? 
+          (<Landing start={toggleStart} /> ) :
+       
+          ( loading ?
+            (<div className="loading">
+              <GridLoader  color="#3498db" loading={loading} size={50} />
+            </div> ) :
+          
+            (<Quiz answers={answers} 
+                questions={questions} 
+                toggle={toggleAnswer} 
+                submitBtn={toggleSubmit}
+                newGameBtn={toggleNewGame}
+                submit={submit}
+                allAnswered={isAllAnswered}
+            />)
+          )  
       }
+
     </div>
   );
 }

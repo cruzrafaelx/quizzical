@@ -5,7 +5,8 @@ export default function Quiz({answers,
                               toggle, 
                               submit, 
                               newGameBtn, 
-                              submitBtn}){
+                              submitBtn,
+                              allAnswered}){
       
       return(
       <section className="questions-container">
@@ -32,10 +33,10 @@ export default function Quiz({answers,
                   }
                   {
                         !submit ?
-                        <button onClick={()=>submitBtn()}>Submit</button> :
+                        <button onClick={()=>submitBtn()}
+                                disabled={!allAnswered}>Submit</button> :
                         <button onClick={()=>newGameBtn()}>New game</button>
                   }
-                  
             </div>
       </section>
       )

@@ -6,6 +6,7 @@
 }
 
 .landing-container{
+  background: #F5F7FB;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,4 +49,11 @@
 
 .not-chosen{
   background: #293264;
+}
+
+.loading{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }

@@ -1,0 +1,39 @@
+//When you submit, you need to tally the score, but also, if the chosen answer is wrong, the isCorrect should be colored differently unless it is held and correct.
+
+    //When you submit, you want the button to change to new game and show the score. 
+    // Also when new game, you want your rawQuestions to be reinitialzed again.
+    // The problem is, we are using the submit dependency to run the useEffect again.
+    // now we have delcared a newGame state which we can use to be a dependency for the use effect. 
+    //Problems: 
+    //1. when we click the submit, the questions get rerendered immediately.
+    // make sure, the rawQuestions only get re-initialized when New game is positive.  
+    //render 2 buttons: submit and newGame, 
+    //if submit state is false, show submit, if submit state is true, show new game.
+    //if you click on submit, submit will be true showing new game button
+    //if you click on new game, new game will be true, which will change useEffect, and it turns submit into false again, showing the submit button once more. 
+
+    //2. the submit button can be clicked even if there is no answer
+    //Make sure in every array, there is atleast one isHeld so button can be clicked. 
+
+    We declare an allAnswered state. 
+
+    inside the toggle answer, we can put an if else condition to check if in every answers array, there is atleast one isHeld, if yes, we declare allAnswered to true if not, we put it to false.
+
+    Goals for tomorrow:
+    1. add a spinner while the questions are being fetched. Also, only show the button when everything has loaded.
+    2. Edit the UI. Try a colorful background with ombré or a white dotted background. 
+    3. Try adding a dark mode.
+
+    
+      {/* {!start 
+       ? <Landing start={toggleStart} /> 
+       : <Quiz answers={answers} 
+               questions={questions} 
+               toggle={toggleAnswer} 
+               submitBtn={toggleSubmit}
+               newGameBtn={toggleNewGame}
+               submit={submit}
+               allAnswered={isAllAnswered}
+         />
+      } */}
+      
