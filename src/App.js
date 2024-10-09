@@ -208,6 +208,7 @@ function App() {
                 newGameBtn={toggleNewGame}
                 submit={submit}
                 allAnswered={isAllAnswered}
+                score={score}
             />)
           )  
       }

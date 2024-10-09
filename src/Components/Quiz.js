@@ -6,7 +6,8 @@ export default function Quiz({answers,
                               submit, 
                               newGameBtn, 
                               submitBtn,
-                              allAnswered}){
+                              allAnswered,
+                              score}){
       
       return(
       <section className="questions-background">
@@ -43,9 +44,17 @@ export default function Quiz({answers,
                         }
                         {
                               !submit ?
-                              <button onClick={()=>submitBtn()}
-                                    disabled={!allAnswered}>Submit</button> :
-                              <button onClick={()=>newGameBtn()}>New game</button>
+                              <div className="sub-btn-container">
+                                    <button className="sub-btn" onClick={()=>submitBtn()}
+                                    disabled={!allAnswered}>Submit</button>
+                              </div>
+                               :
+                              <div className="sub-btn-container">
+                                    <p>You scored {score}/5 correct answers</p>
+                                    <button className="sub-btn" onClick={()=>newGameBtn()}>New game</button>
+                              </div>
+                              
+
                         }
                   </div>
             </div> 
